@@ -6,8 +6,9 @@ import { Label } from '../components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { Separator } from '../components/ui/separator';
-import { Loader2, Building2, Shield } from 'lucide-react';
+import { Loader2, Building2, Shield, ArrowLeft } from 'lucide-react';
 import { blink } from '../blink/client';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ const Login: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,12 +59,24 @@ const Login: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
+        {/* Botão Voltar */}
+        <div className="flex justify-start">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/landing')}
+            className="flex items-center space-x-2 text-slate-600 hover:text-slate-900"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Voltar para o site</span>
+          </Button>
+        </div>
+
         {/* Logo e Título */}
         <div className="text-center space-y-2">
-          <div className="mx-auto w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center">
             <Building2 className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900">Clientus</h1>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Clientus</h1>
           <p className="text-slate-600">Portal de Gestão para Agências</p>
         </div>
 

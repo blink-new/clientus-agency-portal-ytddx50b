@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/layout/Layout';
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 
 // Client Pages
@@ -44,13 +45,18 @@ const AppRoutes: React.FC = () => {
 
   return (
     <Routes>
+      <Route path="/landing" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       
       {/* Client Routes */}
       <Route path="/" element={
-        <ProtectedRoute>
-          {user?.role === 'admin' ? <Navigate to="/admin" replace /> : <ClientDashboard />}
-        </ProtectedRoute>
+        user ? (
+          <ProtectedRoute>
+            {user?.role === 'admin' ? <Navigate to="/admin" replace /> : <ClientDashboard />}
+          </ProtectedRoute>
+        ) : (
+          <Navigate to="/landing" replace />
+        )
       } />
       <Route path="/dashboard" element={
         <ProtectedRoute>
